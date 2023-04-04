@@ -3,6 +3,7 @@ import chatIcon from '../assets/img/icon-chat.png'
 import moneyIcon from '../assets/img/icon-money.png'
 import securityIcon from '../assets/img/icon-security.png'
 import { Link } from 'react-router-dom'
+import { FaUserCircle } from 'react-icons/fa'
 
 function Homepage() {
 
@@ -10,16 +11,15 @@ function Homepage() {
     <>
         <nav className="main-nav">
             <a className="main-nav-logo" href="./index.html">
-                <img
-                className="main-nav-logo-image"
-                src={logo}
-                alt="Argent Bank Logo"
-                />
+                <img className="main-nav-logo-image"
+                    src={logo}
+                    alt="Argent Bank Logo"
+                    />
                 <h1 className="sr-only">Argent Bank</h1>
             </a>
             <div>
                 <Link className="main-nav-item" to="/signin">
-                    <i className="fa fa-user-circle"></i>
+                    <FaUserCircle className="sign-in-icon" />
                     Sign In
                 </Link>
             </div>
