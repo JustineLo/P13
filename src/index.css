@@ -54,6 +54,9 @@ body {
 .main-nav-item {
   text-decoration: none;
   margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 
 .main-nav-item:hover {
@@ -153,6 +156,12 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.sign-in-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .sign-in-button {
   display: block;
   width: 100%;
@@ -175,7 +184,7 @@ body {
 }
 
 .sign-in-icon {
-  font-size: 5rem;
+  font-size: 1rem;
 }
 
 .input-remember {
