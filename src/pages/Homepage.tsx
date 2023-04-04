@@ -2,6 +2,7 @@ import logo from '../assets/img/argentBankLogo.png'
 import chatIcon from '../assets/img/icon-chat.png'
 import moneyIcon from '../assets/img/icon-money.png'
 import securityIcon from '../assets/img/icon-security.png'
+import { Link } from 'react-router-dom'
 
 function Homepage() {
 
@@ -17,10 +18,10 @@ function Homepage() {
                 <h1 className="sr-only">Argent Bank</h1>
             </a>
             <div>
-                <a className="main-nav-item" href="./sign-in.html">
-                <i className="fa fa-user-circle"></i>
-                Sign In
-                </a>
+                <Link className="main-nav-item" to="/signin">
+                    <i className="fa fa-user-circle"></i>
+                    Sign In
+                </Link>
             </div>
         </nav>
         <main>
