@@ -1,7 +1,38 @@
+import { useState } from 'react';
 import logo from '../assets/img/argentBankLogo.png'
 import { FaUserCircle } from 'react-icons/fa'
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+
+const API_BASE_URL = 'http://localhost:3001/api/v1';
+
+export async function login(email: string, password: string) {
+  const response = await axios.post(`${API_BASE_URL}/user/login`, {
+    email,
+    password,
+  }).then((response) => {
+    return response.data;
+  }).
+  catch((err) => {
+    console.log('Error: ', err);
+    });
+    return response;
+}
 
 function Signin() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+
+    async function onSubmit(e: React.FormEvent): Promise<void> {
+        e.preventDefault();
+        try {
+            const response = await login(username, password);
+            dispatch({type: 'SIGNIN', payload: response.body.token});
+        } catch (err) {
+            console.log('Error: ', err);
+        } 
+    };
 
     return (
       <div className='sign-in-page'>
@@ -25,19 +56,19 @@ function Signin() {
                 <FaUserCircle className="sign-in-icon" />
                 <h1>Sign In</h1>
                 <form>
-                <div className="input-wrapper">
-                    <label htmlFor="username">Username</label>
-                    <input type="text" id="username" />
-                </div>
-                <div className="input-wrapper">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" />
-                </div>
-                <div className="input-remember">
-                    <input type="checkbox" id="remember-me" />
-                    <label htmlFor="remember-me">Remember me</label>
-                </div>
-            <button className="sign-in-button">Sign In</button>
+                    <div className="input-wrapper">
+                        <label htmlFor="username">Username</label>
+                        <input value={username} onChange={(e) => setUsername(e.target.value)} type="text" id="username" />
+                    </div>
+                    <div className="input-wrapper">
+                        <label htmlFor="password">Password</label>
+                        <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" id="password" />
+                    </div>
+                    <div className="input-remember">
+                        <input type="checkbox" id="remember-me" />
+                        <label htmlFor="remember-me">Remember me</label>
+                    </div>
+                    <button className="sign-in-button" onClick={onSubmit}>Sign In</button>
                 </form>
             </section>
         </main>
