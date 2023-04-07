@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/img/argentBankLogo.png';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 function Profile() {
+  const profile = useSelector((state: any) => state.profile);
 
   return (
     <div className="profile-page">
@@ -17,7 +19,7 @@ function Profile() {
         <div>
           <Link className="main-nav-item" to="/profile">
             <FaUserCircle className="sign-in-icon" />
-            Tony
+            {profile.firstName}
           </Link>
           <Link className="main-nav-item" to="./index.html">
             <FaSignOutAlt />
@@ -27,7 +29,7 @@ function Profile() {
       </nav>
       <main className="main bg-dark">
         <div className="header">
-          <h1>Welcome back<br />Tony Jarvis!</h1>
+          <h1>Welcome back<br />{profile.firstName} {profile.lastName}!</h1>
           <button className="edit-button">Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
