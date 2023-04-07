@@ -3,6 +3,7 @@ import logo from '../assets/img/argentBankLogo.png'
 import { FaUserCircle } from 'react-icons/fa'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const API_BASE_URL = 'http://localhost:3001/api/v1';
 
@@ -32,7 +33,7 @@ function Signin() {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const token = useSelector((state: any) => state.token);
-    const profile = useSelector((state: any) => state.profile);
+    const navigate = useNavigate();
 
     async function onSubmit(e: React.FormEvent): Promise<void> {
         e.preventDefault();
@@ -43,7 +44,10 @@ function Signin() {
             dispatch({type: 'SET_PROFILE', payload: profile.body});
         } catch (err) {
             console.log('Error: ', err);
-        } 
+        }
+        if (token) {
+            navigate('/profile')
+        }
     };
 
     return (
