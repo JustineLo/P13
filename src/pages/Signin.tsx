@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import logo from '../assets/img/argentBankLogo.png'
 import { FaUserCircle } from 'react-icons/fa'
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const API_BASE_URL = 'http://localhost:3001/api/v1';
 
@@ -10,14 +10,22 @@ export async function login(email: string, password: string) {
   const response = await axios.post(`${API_BASE_URL}/user/login`, {
     email,
     password,
-  }).then((response) => {
+  })
     return response.data;
-  }).
-  catch((err) => {
-    console.log('Error: ', err);
-    });
-    return response;
 }
+
+export async function getProfile(token: string) {
+    const response = await axios.post(
+      `${API_BASE_URL}/user/profile`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  }
 
 function Signin() {
     const [username, setUsername] = useState('');
@@ -29,6 +37,8 @@ function Signin() {
         try {
             const response = await login(username, password);
             dispatch({type: 'SIGNIN', payload: response.body.token});
+            const profile = await getProfile(response.body.token);
+            dispatch({type: 'SET_PROFILE', payload: profile.body});
         } catch (err) {
             console.log('Error: ', err);
         } 

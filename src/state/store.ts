@@ -12,6 +12,11 @@ function rootReducer(state = initialState, action: any): any {
     case 'SIGNOUT':
         return {
             ...state, token: null, profile: null };
+    case 'SET_PROFILE':
+      return {
+        ...state,
+        profile: action.payload,
+      };
     default:
       return state;
   }
