@@ -31,6 +31,8 @@ function Signin() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const token = useSelector((state: any) => state.token);
+    const profile = useSelector((state: any) => state.profile);
 
     async function onSubmit(e: React.FormEvent): Promise<void> {
         e.preventDefault();
