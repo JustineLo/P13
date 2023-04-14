@@ -1,21 +1,10 @@
-import { useState, useEffect } from 'react';
-import logo from '../assets/img/argentBankLogo.png'
-import { FaUserCircle } from 'react-icons/fa'
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import logo from '../assets/img/argentBankLogo.png';
+import { FaUserCircle } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setProfile, signIn } from '../state/store';
-import { getProfile } from './Profile';
-
-const API_BASE_URL = 'http://localhost:3001/api/v1';
-
-export async function login(email: string, password: string) {
-  const response = await axios.post(`${API_BASE_URL}/user/login`, {
-    email,
-    password,
-  })
-    return response.data;
-}
+import { signIn } from '../state/store';
+import { login } from '../api';
 
 function Signin() {
     const [username, setUsername] = useState('');
@@ -24,20 +13,17 @@ function Signin() {
     const navigate = useNavigate();
 
     async function onSubmit(e: React.FormEvent): Promise<void> {
-        e.preventDefault();
-        try {
-          const response = await login(username, password);
-          dispatch(signIn(response.body.token));
-          if (response.body.token) {
-            const fetchedProfile = await getProfile(response.body.token);
-            dispatch(setProfile(fetchedProfile.body));
-            navigate('/profile');
-          }
-        } catch (err) {
-          console.log('Error: ', err);
+      e.preventDefault();
+      try {
+        const response = await login(username, password);
+        dispatch(signIn(response.body.token));
+        if (response.body.token) {
+          navigate('/profile');
         }
-        
+      } catch (err) {
+        console.log('Error: ', err);
       }
+    }
 
     return (
       <div className='sign-in-page'>
@@ -83,6 +69,6 @@ function Signin() {
       </div>
     )
   }
-  
-  export default Signin
+
+export default Signin
   

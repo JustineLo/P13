@@ -5,21 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setProfile, signOut } from '../state/store';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { getProfile } from '../api';
 
 const API_BASE_URL = 'http://localhost:3001/api/v1';
-
-export async function getProfile(token: string) {
-  const response = await axios.post(
-    `${API_BASE_URL}/user/profile`,
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return response.data;
-}
 
 function Profile() {
   const profile = useSelector((state: any) => state.auth.profile);
