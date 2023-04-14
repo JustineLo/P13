@@ -4,10 +4,8 @@ import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { setProfile, signOut } from '../state/store';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { getProfile } from '../api';
-
-const API_BASE_URL = 'http://localhost:3001/api/v1';
+import Header from '../components/Header';
 
 function Profile() {
   const profile = useSelector((state: any) => state.auth.profile);
@@ -59,10 +57,7 @@ function Profile() {
         </div>
       </nav>
       <main className="main bg-dark">
-        <div className="header">
-          <h1>Welcome back<br />{profile.firstName} {profile.lastName}!</h1>
-          <button className="edit-button">Edit Name</button>
-        </div>
+        <Header />
         <h2 className="sr-only">Accounts</h2>
         <section className="account">
           <div className="account-content-wrapper">
