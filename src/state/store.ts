@@ -1,27 +1,33 @@
-import { createStore } from 'redux';
+import { createSlice, configureStore } from '@reduxjs/toolkit';
 
 const initialState = {
-    token: null,
-    profile: null,
+  token: null,
+  profile: null,
 };
 
-function rootReducer(state = initialState, action: any): any {
-  switch (action.type) {
-    case 'SIGNIN':
-        return { ...state, token: action.payload };
-    case 'SIGNOUT':
-        return {
-            ...state, token: null, profile: null };
-    case 'SET_PROFILE':
-      return {
-        ...state,
-        profile: action.payload,
-      };
-    default:
-      return state;
-  }
-}
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    signIn: (state, action) => {
+      state.token = action.payload;
+    },
+    signOut: (state) => {
+      state.token = null;
+      state.profile = null;
+    },
+    setProfile: (state, action) => {
+      state.profile = action.payload;
+    },
+  },
+});
 
-const store = createStore(rootReducer);
+export const { signIn, signOut, setProfile } = authSlice.actions;
+
+const store = configureStore({
+  reducer: {
+    auth: authSlice.reducer,
+  },
+});
 
 export default store;

@@ -4,6 +4,8 @@ import { FaUserCircle } from 'react-icons/fa'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setProfile, signIn } from '../state/store';
+import { getProfile } from './Profile';
 
 const API_BASE_URL = 'http://localhost:3001/api/v1';
 
@@ -15,40 +17,27 @@ export async function login(email: string, password: string) {
     return response.data;
 }
 
-export async function getProfile(token: string) {
-    const response = await axios.post(
-      `${API_BASE_URL}/user/profile`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.data;
-  }
-
 function Signin() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
-    const token = useSelector((state: any) => state.token);
     const navigate = useNavigate();
 
     async function onSubmit(e: React.FormEvent): Promise<void> {
         e.preventDefault();
         try {
-            const response = await login(username, password);
-            dispatch({type: 'SIGNIN', payload: response.body.token});
-            const profile = await getProfile(response.body.token);
-            dispatch({type: 'SET_PROFILE', payload: profile.body});
+          const response = await login(username, password);
+          dispatch(signIn(response.body.token));
+          if (response.body.token) {
+            const fetchedProfile = await getProfile(response.body.token);
+            dispatch(setProfile(fetchedProfile.body));
+            navigate('/profile');
+          }
         } catch (err) {
-            console.log('Error: ', err);
+          console.log('Error: ', err);
         }
-        if (token) {
-            navigate('/profile')
-        }
-    };
+        
+      }
 
     return (
       <div className='sign-in-page'>

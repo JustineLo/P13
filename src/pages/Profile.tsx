@@ -1,10 +1,53 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/img/argentBankLogo.png';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProfile, signOut } from '../state/store';
+import { useEffect } from 'react';
+import axios from 'axios';
+
+const API_BASE_URL = 'http://localhost:3001/api/v1';
+
+export async function getProfile(token: string) {
+  const response = await axios.post(
+    `${API_BASE_URL}/user/profile`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+}
 
 function Profile() {
-  const profile = useSelector((state: any) => state.profile);
+  const profile = useSelector((state: any) => state.auth.profile);
+  const token = useSelector((state: any) => state.auth.token);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token || !profile) {
+      navigate('/signin')
+    }
+    async function fetchProfile() {
+      const fetchedProfile = await getProfile(token);
+      dispatch(setProfile(fetchedProfile.body));
+      
+    }
+    fetchProfile();
+  }, []);
+
+  const handleSignOut = () => {
+    dispatch(signOut());
+  };
+
+  if (!profile) {
+    return (
+      <p>Loading profile...</p>
+    );
+  }
 
   return (
     <div className="profile-page">
@@ -21,7 +64,7 @@ function Profile() {
             <FaUserCircle className="sign-in-icon" />
             {profile.firstName}
           </Link>
-          <Link className="main-nav-item" to="./index.html">
+          <Link className="main-nav-item" to="/" onClick={handleSignOut}>
             <FaSignOutAlt />
             Sign Out
           </Link>
