@@ -11,6 +11,7 @@ export async function login(email: string, password: string) {
 }
 
 export async function getProfile(token: string) {
+  try {
     const response = await axios.post(
       `${API_BASE_URL}/user/profile`,
       {},
@@ -21,5 +22,9 @@ export async function getProfile(token: string) {
       }
     );
     return response.data;
+  } catch (err) {
+    throw err
+  }
+   
   }
   

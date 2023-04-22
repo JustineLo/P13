@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from '../assets/img/argentBankLogo.png';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,18 +11,17 @@ function Profile() {
   const profile = useSelector((state: any) => state.auth.profile);
   const token = useSelector((state: any) => state.auth.token);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token || !profile) {
-      navigate('/signin')
-    }
     async function fetchProfile() {
-      const fetchedProfile = await getProfile(token);
-      dispatch(setProfile(fetchedProfile.body));
-      
+      try {
+        const fetchedProfile = await getProfile(token);
+        dispatch(setProfile(fetchedProfile.body));
+      } catch (err) {
+      }
     }
     fetchProfile();
+    
   }, []);
 
   const handleSignOut = () => {
@@ -35,7 +34,9 @@ function Profile() {
     );
   }
 
+
   return (
+    
     <div className="profile-page">
       <nav className="main-nav">
         <a className="main-nav-logo" href="./index.html">
