@@ -9,20 +9,21 @@ import Header from '../components/Header';
 
 function Profile() {
   const profile = useSelector((state: AppState) => state.auth.profile);
-  const token = useSelector((state: AppState) => state.auth.token);
+  const storedToken = localStorage.getItem('token') || '';
   const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const fetchedProfile = await getProfile(token);
+        const fetchedProfile = await getProfile(storedToken);
         dispatch(setProfile(fetchedProfile.body));
       } catch (err) {
       }
     }
     fetchProfile();
-    
-  }, []);
+  
+  }, [storedToken, dispatch]);
+  
 
   const handleSignOut = () => {
     dispatch(signOut());

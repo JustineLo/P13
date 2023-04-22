@@ -23,9 +23,11 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     signIn: (state, action) => {
+      localStorage.setItem('token', action.payload);
       state.token = action.payload;
     },
     signOut: (state) => {
+      localStorage.removeItem('token');
       state.token = null;
       state.profile = {
         firstName: '',

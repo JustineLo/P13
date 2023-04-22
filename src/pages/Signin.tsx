@@ -16,14 +16,14 @@ function Signin() {
       e.preventDefault();
       try {
         const response = await login(username, password);
-        dispatch(signIn(response.body.token));
         if (response.body.token) {
+          dispatch(signIn(response.body.token));
           navigate('/profile');
         }
       } catch (err) {
         console.log('Error: ', err);
       }
-    }
+    }    
 
     return (
       <div className='sign-in-page'>
