@@ -22,9 +22,8 @@ export async function getProfile(token: string) {
       }
     );
     return response.data;
-  } catch (err) {
-    throw err
-  }
-   
+    } catch (err) {
+      throw err
+    }
   }
   

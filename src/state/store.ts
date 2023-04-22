@@ -1,8 +1,21 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit';
 
+export type AppState = {
+  auth: {
+    token: string;
+    profile: {
+      firstName: string;
+      lastName: string;
+    };
+  };
+}
+
 const initialState = {
   token: null,
-  profile: null,
+  profile: {
+    firstName: '',
+    lastName: '',
+  },
 };
 
 const authSlice = createSlice({
@@ -14,7 +27,10 @@ const authSlice = createSlice({
     },
     signOut: (state) => {
       state.token = null;
-      state.profile = null;
+      state.profile = {
+        firstName: '',
+        lastName: '',
+      }
     },
     setProfile: (state, action) => {
       state.profile = action.payload;

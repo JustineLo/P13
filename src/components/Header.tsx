@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { setProfile } from "../state/store";
+import { AppState, setProfile } from "../state/store";
 
 function Header() {
-    const profile = useSelector((state: any) => state.auth.profile);
+    const profile = useSelector((state: AppState) => state.auth.profile);
     const dispatch = useDispatch();
     const [edit, setEdit] = useState(false);
     const [firstName, setFirstName] = useState(profile.firstName);

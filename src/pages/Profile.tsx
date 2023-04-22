@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/img/argentBankLogo.png';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProfile, signOut } from '../state/store';
+import { AppState, setProfile, signOut } from '../state/store';
 import { useEffect } from 'react';
 import { getProfile } from '../api';
 import Header from '../components/Header';
 
 function Profile() {
-  const profile = useSelector((state: any) => state.auth.profile);
-  const token = useSelector((state: any) => state.auth.token);
+  const profile = useSelector((state: AppState) => state.auth.profile);
+  const token = useSelector((state: AppState) => state.auth.token);
   const dispatch = useDispatch();
 
   useEffect(() => {
