@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppState, setProfile } from "../state/store";
 
 function Header() {
@@ -17,13 +17,24 @@ function Header() {
         }
     }
 
+    function handleCancelButton() {
+        setEdit(false);
+        setFirstName(profile.firstName);
+        setLastName(profile.lastName);
+    }
+
+    useEffect(() => {
+        setFirstName(profile.firstName);
+        setLastName(profile.lastName);
+    }, [profile.firstName, profile.lastName]);
+
     return (
         <div className="header">
             <div className="header-content">
                 <h1>Welcome back</h1>
                 {edit ? <div className="header-inputs">
-                    <input onChange={(e) => setFirstName(e.target.value)} placeholder={profile.firstName}></input>
-                    <input onChange={(e) => setLastName(e.target.value)} placeholder={profile.lastName}></input>
+                    <input onChange={(e) => setFirstName(e.target.value)} value={firstName}></input>
+                    <input onChange={(e) => setLastName(e.target.value)} value={lastName}></input>
                     </div> :
                     <h1>{`${profile.firstName} ${profile.lastName}!`}</h1>
                     }
@@ -31,7 +42,7 @@ function Header() {
                     <button className="edit-button" onClick={handleEditButton}>
                         {edit ? 'Save' : 'Edit Name'}
                     </button>
-                    {edit && <button className="edit-button" onClick={handleEditButton}>
+                    {edit && <button className="edit-button" onClick={handleCancelButton}>
                         Cancel
                     </button> }
                 </div>
