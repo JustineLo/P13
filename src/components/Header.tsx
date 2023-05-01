@@ -13,6 +13,7 @@ function Header() {
         setEdit(!edit);
         if (edit) {
             dispatch(setProfile({ ...profile, firstName, lastName }));
+            localStorage.setItem('profile', JSON.stringify({ ...profile, firstName, lastName }));
         }
     }
 

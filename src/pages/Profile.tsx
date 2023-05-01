@@ -17,6 +17,7 @@ function Profile() {
       try {
         const fetchedProfile = await getProfile(storedToken);
         dispatch(setProfile(fetchedProfile.body));
+        localStorage.setItem('profile', JSON.stringify(fetchedProfile.body));
       } catch (err) {
       }
     }

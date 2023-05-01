@@ -18,6 +18,7 @@ function Signin() {
         const response = await login(username, password);
         if (response.body.token) {
           dispatch(signIn(response.body.token));
+          localStorage.setItem('token', response.body.token);
           navigate('/profile');
         }
       } catch (err) {
