@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { AppState, setProfile } from "../state/store";
+import { updateProfile } from "../api";
 
 function Header() {
     const profile = useSelector((state: AppState) => state.auth.profile);
@@ -13,7 +14,7 @@ function Header() {
         setEdit(!edit);
         if (edit) {
             dispatch(setProfile({ ...profile, firstName, lastName }));
-            localStorage.setItem('profile', JSON.stringify({ ...profile, firstName, lastName }));
+            updateProfile(firstName, lastName, localStorage.getItem('token') || '')
         }
     }
 

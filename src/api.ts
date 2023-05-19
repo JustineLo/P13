@@ -22,8 +22,22 @@ export async function getProfile(token: string) {
       }
     );
     return response.data;
-    } catch (err) {
-      throw err
+    } catch (error) {
+      throw error
     }
   }
   
+
+export async function updateProfile(firstName: string, lastName: string, token: string){
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/user/profile`,
+      { firstName, lastName }, 
+      { headers: {
+        Authorization: `Bearer ${token}`,
+      }});
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
