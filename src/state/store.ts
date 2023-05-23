@@ -32,13 +32,13 @@ const authSlice = createSlice({
         lastName: '',
       }
     },
-    setProfile: (state, action) => {
+    updateProfile: (state, action) => {
       state.profile = action.payload;
     },
   },
 });
 
-export const { signIn, signOut, setProfile } = authSlice.actions;
+export const { signIn, signOut, updateProfile } = authSlice.actions;
 
 const store = configureStore({
   reducer: {

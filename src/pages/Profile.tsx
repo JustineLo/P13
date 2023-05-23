@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/img/argentBankLogo.png';
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppState, setProfile, signOut } from '../state/store';
+import { AppState, signOut, updateProfile } from '../state/store';
 import { useEffect } from 'react';
 import { getProfile } from '../api';
 import Header from '../components/Header';
@@ -18,8 +18,7 @@ function Profile() {
     async function fetchProfile() {
       try {
         const fetchedProfile = await getProfile(storedToken);
-        dispatch(setProfile(fetchedProfile.body));
-        localStorage.setItem('profile', JSON.stringify(fetchedProfile.body));
+        dispatch(updateProfile(fetchedProfile.body));
       } catch (err) {
       }
     }

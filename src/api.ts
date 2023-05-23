@@ -28,11 +28,14 @@ export async function getProfile(token: string) {
   }
   
 
-export async function updateProfile(firstName: string, lastName: string, token: string){
+export async function setProfile(inputs: {
+  firstName: string,
+  lastName: string,
+}, token: string){
   try {
     const response = await axios.put(
       `${API_BASE_URL}/user/profile`,
-      { firstName, lastName }, 
+      inputs, 
       { headers: {
         Authorization: `Bearer ${token}`,
       }});
