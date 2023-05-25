@@ -2,7 +2,7 @@ import { useState } from 'react';
 import logo from '../assets/img/argentBankLogo.png';
 import { FaUserCircle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signIn } from '../state/store';
 import { login } from '../api';
 
@@ -29,13 +29,13 @@ function Signin() {
     return (
       <div className='sign-in-page'>
         <nav className="main-nav">
-            <a className="main-nav-logo" href="./index.html">
+          <Link className="main-nav-logo" to="/">
                 <img className="main-nav-logo-image"
                     src={logo}
                     alt="Argent Bank Logo"
                     />
                 <h1 className="sr-only">Argent Bank</h1>
-            </a>
+            </Link>
             <div>
                 <a className="main-nav-item" href="./sign-in.html">
                     <FaUserCircle className="sign-in-icon" />
